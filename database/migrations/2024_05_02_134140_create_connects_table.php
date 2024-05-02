@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profile_posts', function (Blueprint $table) {
+        Schema::create('connects', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('profile_id');
-            $table->unsignedInteger('post_id');
-
-            $table->foreign('profile_id')->references('id')->on('profiles');
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->string('follower');
+            $table->string('followed');
             $table->timestamps();
+
+            $table->foreign('follower')->references('username')->on('profiles');
+            $table->foreign('followed')->references('username')->on('profiles');
+
+            $table->unique(['follower', 'followed']);
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('profile_posts');
+        Schema::dropIfExists('connects');
     }
 };

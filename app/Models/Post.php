@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'profile_id',
+        'image',
+        'description',
+        'likes'
+    ];
+
+    public function profile(){
+        return $this->belongsTo(Profile::class);
+    }
 }
