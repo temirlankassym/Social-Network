@@ -13,14 +13,19 @@ Route::post('/login',[AuthController::class, 'login']);
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('/profile', [ProfileController::class, 'update']);
+    Route::get('/profile', [ProfileController::class, 'show']);
 
     Route::post('/post', [PostController::class, 'create']);
-    Route::delete('/post/{post}', [PostController::class, 'destroy']);
     Route::get('/posts', [PostController::class, 'getAllPosts']);
+    Route::delete('/post/{post}', [PostController::class, 'destroy']);
+    Route::get('/post/{post}', [PostController::class, 'show']);
 
     Route::post('/follow', [ConnectController::class, 'follow']);
     Route::post('/unfollow', [ConnectController::class, 'unfollow']);
 
     Route::post('/like/{post}', [InteractionController::class, 'like']);
     Route::post('/unlike/{post}', [InteractionController::class, 'unlike']);
+
+    Route::post('/comment', [InteractionController::class, 'comment']);
+    Route::post('/uncomment', [InteractionController::class, 'uncomment']);
 });

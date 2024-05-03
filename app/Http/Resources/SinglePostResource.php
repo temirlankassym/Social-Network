@@ -2,12 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Requests\CommentRequest;
 use App\Models\Interaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class SinglePostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -28,11 +27,12 @@ class PostResource extends JsonResource
         return [
             'id' => $this->id,
             'image' => $this->image,
-//            'description' => $this->description,
-//            'likes' => $this->likes,
-//            'time' => date('H:i d M Y',strtotime($this->created_at)),
-//            'comments' => CommentResource::collection($comments),
-//            'is_liked' => $isLiked > 0
+            'description' => $this->description,
+            'likes' => $this->likes,
+            'time' => date('H:i d M Y',strtotime($this->created_at)),
+            'comments' => CommentResource::collection($comments),
+            'is_liked' => $isLiked > 0,
+            'users_liked' => []
         ];
     }
 }
