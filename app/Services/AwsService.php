@@ -10,7 +10,7 @@ class AwsService{
     {
         if($file){
             $name = $file->getClientOriginalName();
-            $path = $name.''.Str::random(10);
+            $path = pathinfo($name, PATHINFO_FILENAME) . '_' . Str::random(10) . '.' . pathinfo($name, PATHINFO_EXTENSION);
             Storage::disk('s3')->put($path,file_get_contents($file),'public');
             $link = Storage::disk('s3')->url($path);
             return $link;
