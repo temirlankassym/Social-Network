@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
@@ -28,4 +29,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 
     Route::post('/comment', [InteractionController::class, 'comment']);
     Route::post('/uncomment', [InteractionController::class, 'uncomment']);
+
+    Route::get('/direct', [MessageController::class, 'index']);
+    Route::get('/direct/{username}', [MessageController::class, 'show']);
+    Route::post('/direct/{username}/message', [ChatController::class, 'postMessage']);
 });

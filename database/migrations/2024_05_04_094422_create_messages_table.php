@@ -9,9 +9,13 @@ return new class extends Migration
     public function up(): void {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->text('text')->nullable();
+            $table->string('sender');
+            $table->string('receiver');
+            $table->string('text');
             $table->timestamps();
+
+            $table->foreign('sender')->references('username')->on('profiles');
+            $table->foreign('receiver')->references('username')->on('profiles');
         });
     }
 
