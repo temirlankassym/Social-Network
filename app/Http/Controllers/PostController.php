@@ -53,17 +53,6 @@ class PostController extends Controller
         return response()->json("Success",200);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/posts",
-     *     summary="Get all posts",
-     *     tags={"Get Posts"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Response(response="200", description="Success"),
-     *     @OA\Response(response="400", description="Bad request"),
-     *     @OA\Response(response="401", description="Unauthorized"),
-     * )
-     */
 
     public function getAllPosts()
     {

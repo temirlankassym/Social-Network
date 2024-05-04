@@ -561,6 +561,65 @@
             }
         },
         "/api/profile": {
+            "get": {
+                "tags": [
+                    "Get Profile"
+                ],
+                "summary": "Get profile",
+                "operationId": "ede45b19680d6fb1319013a741a05734",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "username": {
+                                            "type": "string",
+                                            "example": "username"
+                                        },
+                                        "bio": {
+                                            "type": "string",
+                                            "example": "This is a bio"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "image.png"
+                                        },
+                                        "posts_count": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "followers": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "following": {
+                                            "type": "integer",
+                                            "example": 3
+                                        },
+                                        "posts": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Post"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Update Profile"
@@ -630,6 +689,19 @@
                         "description": "The date and time when the comment was last updated",
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Post": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "image": {
+                        "type": "string",
+                        "example": "image.png"
                     }
                 },
                 "type": "object"
