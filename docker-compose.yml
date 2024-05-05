@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: php artisan serve --host=0.0.0.0 --port=8000
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        depends_on:
+            - db
+
+    queue:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        command: php artisan queue:listen
+        volumes:
+            - .:/app
+
+    reverb:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        command: php artisan reverb:start
+        volumes:
+            - .:/app
+
+    npm:
+        image: node:20
+        command: bash -c "npm install && npm run dev"
+        volumes:
+            - .:/app
