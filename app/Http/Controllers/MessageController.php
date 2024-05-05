@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MessageResource;
+use App\Http\Resources\UserResource;
 use App\Models\Message;
 use App\Models\User;
 
@@ -10,9 +12,7 @@ class MessageController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json([
-            'users' => $users
-        ]);
+        return response()->json(UserResource::collection($users));
     }
     public function show($username)
     {
@@ -26,8 +26,7 @@ class MessageController extends Controller
 
         return response()->json([
             'username' => $user->username,
-            'user' => $user,
-            'messages' => $messages
+            'messages' => MessageResource::collection($messages)
         ]);
     }
 }
