@@ -14,8 +14,8 @@ return new class extends Migration
             $table->string('text');
             $table->timestamps();
 
-            $table->foreign('sender')->references('username')->on('profiles');
-            $table->foreign('receiver')->references('username')->on('profiles');
+            $table->foreign('sender')->references('username')->on('profiles')->onDelete('cascade');
+            $table->foreign('receiver')->references('username')->on('profiles')->onDelete('cascade');
         });
     }
 

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('type')->default('like');
             $table->string('description')->nullable();
 
-            $table->foreign('post_id')->references('id')->on('posts');
-            $table->foreign('username')->references('username')->on('profiles');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('username')->references('username')->on('profiles')->onDelete('cascade');
             $table->timestamps();
         });
     }

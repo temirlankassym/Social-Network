@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('followed');
             $table->timestamps();
 
-            $table->foreign('follower')->references('username')->on('profiles');
-            $table->foreign('followed')->references('username')->on('profiles');
+            $table->foreign('follower')->references('username')->on('profiles')->onDelete('cascade');
+            $table->foreign('followed')->references('username')->on('profiles')->onDelete('cascade');
 
             $table->unique(['follower', 'followed']);
         });
