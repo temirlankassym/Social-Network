@@ -42,9 +42,9 @@ class ConnectController extends Controller
             return response()->json(['error' => 'Invalid data'], 400);
         }
 
-        $connect = $this->connectService->follow($username);
+        $this->connectService->follow($username);
 
-        return response()->json($connect);
+        return response()->json("Success");
     }
 
     /**

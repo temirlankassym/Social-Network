@@ -58,8 +58,8 @@ class ProfileController extends Controller
      *
      * @OA\Get(
      *     path="/api/profile",
-     *     summary="Get profile",
-     *     tags={"Get Profile"},
+     *     summary="Show your profile",
+     *     tags={"Show your profile"},
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response="200",
@@ -80,5 +80,33 @@ class ProfileController extends Controller
 
     public function show(){
         return response()->json(new ProfileResource(auth()->user()->profile));
+    }
+
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/profile/{username}",
+     *     summary="Get someone's profile",
+     *     tags={"Get Profile"},
+     *     @OA\Response(
+     *         response="200",
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="username", type="string", example="username"),
+     *             @OA\Property(property="bio", type="string", example="This is a bio"),
+     *             @OA\Property(property="image", type="string", example="image.png"),
+     *             @OA\Property(property="posts_count", type="integer", example=10),
+     *             @OA\Property(property="followers", type="integer", example=5),
+     *             @OA\Property(property="following", type="integer", example=3),
+     *             @OA\Property(property="posts", type="array", @OA\Items(ref="#/components/schemas/Post"))
+     *         )
+     *     ),
+     *     @OA\Response(response="400", description="Bad request")
+     * )
+     */
+
+    public function profile($username){
+        $profile = Profile::where('username',$username)->first();
+        return response()->json(new ProfileResource($profile));
     }
 }

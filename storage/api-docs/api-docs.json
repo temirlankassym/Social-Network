@@ -423,31 +423,6 @@
                 ]
             }
         },
-        "/api/posts": {
-            "get": {
-                "tags": [
-                    "Get Posts"
-                ],
-                "summary": "Get all posts",
-                "operationId": "ef5a1d6f52f42f2bee93544d302e5e55",
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/post/{post}": {
             "get": {
                 "tags": [
@@ -563,9 +538,9 @@
         "/api/profile": {
             "get": {
                 "tags": [
-                    "Get Profile"
+                    "Show profile"
                 ],
-                "summary": "Get profile",
+                "summary": "Show your profile",
                 "operationId": "ede45b19680d6fb1319013a741a05734",
                 "responses": {
                     "200": {
@@ -658,6 +633,62 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/api/{username}": {
+            "get": {
+                "tags": [
+                    "Get Profile"
+                ],
+                "summary": "Get profile",
+                "operationId": "7946e81bf507bca2917205e52b722b67",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "username": {
+                                            "type": "string",
+                                            "example": "username"
+                                        },
+                                        "bio": {
+                                            "type": "string",
+                                            "example": "This is a bio"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "example": "image.png"
+                                        },
+                                        "posts_count": {
+                                            "type": "integer",
+                                            "example": 10
+                                        },
+                                        "followers": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "following": {
+                                            "type": "integer",
+                                            "example": 3
+                                        },
+                                        "posts": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Post"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
             }
         }
     },
