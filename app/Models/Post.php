@@ -23,8 +23,7 @@ class Post extends Model
     public function __clone(): void
     {
         if($this->description){
-            $copy = clone $this->description;
-            $this->description = "Reposted from: ".$this->profile->username.'. '.$copy;
+            $this->description = "Reposted from: ".$this->profile->username.'. '.$this->description;
         }else{
             $this->description = "Reposted from: ".$this->profile->username;
         }
