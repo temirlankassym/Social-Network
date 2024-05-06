@@ -538,7 +538,7 @@
         "/api/profile": {
             "get": {
                 "tags": [
-                    "Show profile"
+                    "Show your profile"
                 ],
                 "summary": "Show your profile",
                 "operationId": "ede45b19680d6fb1319013a741a05734",
@@ -635,13 +635,13 @@
                 ]
             }
         },
-        "/api/{username}": {
+        "/api/profile/{username}": {
             "get": {
                 "tags": [
                     "Get Profile"
                 ],
-                "summary": "Get profile",
-                "operationId": "7946e81bf507bca2917205e52b722b67",
+                "summary": "Get someone's profile",
+                "operationId": "7b9ee793e9731148f0119cda577f2be0",
                 "responses": {
                     "200": {
                         "description": "Success",
