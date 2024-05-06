@@ -8,15 +8,13 @@ use App\Models\Profile;
 class ConnectService{
     public function follow(string $username)
     {
-        $connect = Connect::create([
+        Connect::create([
             'follower' => auth()->user()->username,
             'followed' => $username,
         ]);
 
         Profile::where('username',$username)->first()->increment('followers',1);
         auth()->user()->profile->increment('following',1);
-
-        return $connect;
     }
 
     public function unfollow(string $username)

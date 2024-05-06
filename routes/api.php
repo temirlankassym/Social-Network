@@ -12,6 +12,8 @@ use App\Http\Controllers\InteractionController;
 Route::post('/register',[AuthController::class, 'register']);
 Route::post('/login',[AuthController::class, 'login']);
 
+Route::get('/profile/{username}', [ProfileController::class, 'profile']);
+
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('/profile', [ProfileController::class, 'update']);
     Route::get('/profile', [ProfileController::class, 'show']);
