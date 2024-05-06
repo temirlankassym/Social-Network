@@ -379,6 +379,50 @@
                 ]
             }
         },
+        "/api/repost": {
+            "post": {
+                "tags": [
+                    "Repost"
+                ],
+                "summary": "Repost a post",
+                "operationId": "b4a5314452d4ceac36bf68e569d3ed29",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "ID of the post to repost",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful repost"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/post": {
             "post": {
                 "tags": [

@@ -35,4 +35,6 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('/direct', [MessageController::class, 'index']);
     Route::get('/direct/{username}', [MessageController::class, 'show']);
     Route::post('/direct/{username}/message', [ChatController::class, 'postMessage']);
+
+    Route::post('/repost', [InteractionController::class, 'repost']);
 });

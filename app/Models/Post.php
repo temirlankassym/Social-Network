@@ -19,4 +19,14 @@ class Post extends Model
     public function profile(){
         return $this->belongsTo(Profile::class);
     }
+
+    public function __clone(): void
+    {
+        if($this->description){
+            $copy = clone $this->description;
+            $this->description = "Reposted from: ".$this->profile->username.'. '.$copy;
+        }else{
+            $this->description = "Reposted from: ".$this->profile->username;
+        }
+    }
 }

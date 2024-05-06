@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use App\Http\Resources\SinglePostResource;
 use App\Models\Connect;
 use App\Models\Interaction;
+use App\Models\Profile;
 use App\Services\InteractionService;
 use Illuminate\Http\Request;
 use App\Models\Post;
@@ -141,6 +143,36 @@ class InteractionController extends Controller
         }
 
         $comment->delete();
+
+        return response("Success",200);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/repost",
+     *     summary="Repost a post",
+     *     tags={"Repost"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             required={"id"},
+     *             @OA\Property(property="id", type="int", example="1", description="ID of the post to repost"),
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Successful repost"),
+     *     @OA\Response(response="400", description="Bad request"),
+     *     @OA\Response(response="401", description="Unauthorized")
+     * )
+     */
+
+    public function repost(Request $request){
+        $post = clone Post::where('id',$request['id'])->first();
+
+        Post::create([
+            'profile_id' => auth()->user()->profile->id,
+            'image' => $post->image,
+            'description' => $post->description,
+        ]);
 
         return response("Success",200);
     }
