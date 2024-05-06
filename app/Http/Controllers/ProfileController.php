@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Resources\ProfileResource;
+use App\Interfaces\PublisherInterface;
 use App\Services\AwsService;
 use Illuminate\Http\Request;
 use App\Models\Profile;
 
 class ProfileController extends Controller
 {
+
+    private $publisher;
+
     private AwsService $awsService;
 
-    public function __construct(AwsService $awsService)
+    public function __construct(AwsService $awsService, PublisherInterface $publisher)
     {
         $this->awsService = $awsService;
+        $this->publisher = $publisher;
     }
 
      /**
@@ -109,5 +114,51 @@ class ProfileController extends Controller
     public function profile($username){
         $profile = Profile::where('username',$username)->first();
         return response()->json(new ProfileResource($profile));
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/subscribe",
+     *     summary="Subscribe to profile and receive notification when new post will came out",
+     *     tags={"Subscribe"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="username", type="string", example="madikensky")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Successful subscription"),
+     *     @OA\Response(response="400", description="Bad request")
+     * )
+     */
+
+    public function subscribe(Request $request){
+        $this->publisher->addSubscriber($request['username'], auth()->user()->username);
+        return response("Success",200);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/unsubscribe",
+     *     summary="Unsubscribe from profile",
+     *     tags={"Unsubscribe"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(
+     *             @OA\Property(property="username", type="string", example="madikensky")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Successful unsubscription"),
+     *     @OA\Response(response="400", description="Bad request")
+     * )
+     */
+
+    public function unsubscribe(Request $request){
+        $this->publisher->removeSubscriber($request['username'], auth()->user()->username);
+        return response("Success",200);
+    }
+
+    public function subscribers(Request $request){
+        return response()->json(Profile::where('username',$request['username'])->first()->subscribers);
     }
 }

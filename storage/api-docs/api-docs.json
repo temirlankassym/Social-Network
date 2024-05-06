@@ -738,6 +738,80 @@
                     }
                 }
             }
+        },
+        "/api/subscribe": {
+            "post": {
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "Subscribe to profile and receive notification when new post will came out",
+                "operationId": "a3a0e41bf97834fa20829c985963f92c",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "madikensky"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful subscription"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/unsubscribe": {
+            "post": {
+                "tags": [
+                    "Unsubscribe"
+                ],
+                "summary": "Unsubscribe from profile",
+                "operationId": "32971008256d4f3d59a3743263413159",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "madikensky"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful unsubscription"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

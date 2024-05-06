@@ -37,4 +37,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('/direct/{username}/message', [ChatController::class, 'postMessage']);
 
     Route::post('/repost', [InteractionController::class, 'repost']);
+
+    Route::post('/subscribe', [ProfileController::class, 'subscribe']);
+    Route::post('/unsubscribe', [ProfileController::class, 'unsubscribe']);
+
+    Route::get('/subscribers', [ProfileController::class, 'subscribers']);
 });

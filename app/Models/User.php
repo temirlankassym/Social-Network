@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Interfaces\SubscriberInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, SubscriberInterface
 {
     use HasFactory, Notifiable;
 
@@ -66,5 +67,12 @@ class User extends Authenticatable implements JWTSubject
         return [
             'id' => $this->id
         ];
+    }
+
+    public function updateState(string $username, string $subscriber){
+        Notification::create([
+            'username' => $subscriber,
+            'description' => $username." just made a new post. Check it out"
+        ]);
     }
 }

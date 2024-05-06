@@ -53,15 +53,6 @@ class PostController extends Controller
         return response()->json("Success",200);
     }
 
-
-    public function getAllPosts()
-    {
-        $posts = auth()->user()->profile->post;
-        return response()->json([
-            'posts' => PostResource::collection($posts)
-        ]);
-    }
-
     /**
      *  @OA\Schema(
      *      schema="Comment",
