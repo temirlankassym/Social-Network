@@ -673,6 +673,10 @@
                                             "type": "integer",
                                             "example": 3
                                         },
+                                        "is_subscribed": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
                                         "posts": {
                                             "type": "array",
                                             "items": {

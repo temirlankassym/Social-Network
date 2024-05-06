@@ -32,10 +32,10 @@ class ProfileResource extends JsonResource
             'posts_count' => $this->posts,
             'followers' => $this->followers,
             'following' => $this->following,
+            'is_subscribed' => $subscribed,
             'posts' => PostResource::collection($this->post->sortBy(function ($post) {
                 return [$post->created_at, $post->id];
-            })),
-            'is_subscribed' => $subscribed
+            }))
         ];
     }
 }

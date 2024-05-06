@@ -98,6 +98,7 @@ class ProfileController extends Controller
      *             @OA\Property(property="posts_count", type="integer", example=10),
      *             @OA\Property(property="followers", type="integer", example=5),
      *             @OA\Property(property="following", type="integer", example=3),
+     *             @OA\Property(property="is_subscribed", type="boolean", example="false"),
      *             @OA\Property(property="posts", type="array", @OA\Items(ref="#/components/schemas/Post"))
      *         )
      *     ),
