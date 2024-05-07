@@ -5,21 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Resources\ProfileResource;
 use App\Interfaces\PublisherInterface;
+use App\Models\User;
 use App\Services\AwsService;
+use App\Services\RedisService;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\Profile;
 
 class ProfileController extends Controller
 {
-
     private $publisher;
-
     private AwsService $awsService;
+    private RedisService $redisService;
 
-    public function __construct(AwsService $awsService, PublisherInterface $publisher)
+    public function __construct(AwsService $awsService, PublisherInterface $publisher, RedisService $redisService)
     {
         $this->awsService = $awsService;
         $this->publisher = $publisher;
+        $this->redisService = $redisService;
     }
 
      /**
@@ -84,7 +87,12 @@ class ProfileController extends Controller
      */
 
     public function show(){
-        return response()->json(new ProfileResource(auth()->user()->profile));
+        $user = auth()->user();
+        $profile = $this->redisService->getFromCache('profile:'.$user->username);
+        if(!$profile){
+            $profile = $this->redisService->set('profile:'.$user->username, new ProfileResource($user->profile));
+        }
+        return response()->json($profile);
     }
 
     /**
@@ -112,8 +120,11 @@ class ProfileController extends Controller
      */
 
     public function profile($username){
-        $profile = Profile::where('username',$username)->first();
-        return response()->json(new ProfileResource($profile));
+        $profile = $this->redisService->getFromCache('profile:'.$username);
+        if(!$profile){
+            $profile = $this->redisService->set('profile:'.$username, new ProfileResource(Profile::where('username',$username)->first()));
+        }
+        return response()->json($profile);
     }
 
     /**

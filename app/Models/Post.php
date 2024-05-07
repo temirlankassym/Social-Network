@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Model;
 #[ObservedBy([PostObserver::class])]
 class Post extends Model
 {
+    public function __clone(): void
+    {
+        if($this->description){
+            $this->description = "Reposted from: ".$this->profile->username.'. '.$this->description;
+        }else{
+            $this->description = "Reposted from: ".$this->profile->username;
+        }
+    }
+
     use HasFactory;
 
     protected $fillable = [
@@ -23,12 +32,5 @@ class Post extends Model
         return $this->belongsTo(Profile::class);
     }
 
-    public function __clone(): void
-    {
-        if($this->description){
-            $this->description = "Reposted from: ".$this->profile->username.'. '.$this->description;
-        }else{
-            $this->description = "Reposted from: ".$this->profile->username;
-        }
-    }
+
 }
