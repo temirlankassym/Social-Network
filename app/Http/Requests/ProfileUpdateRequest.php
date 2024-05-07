@@ -22,6 +22,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "username" => 'string|max:255|unique:users,username',
             "image" => "mimes:png,jpeg",
             'bio' => 'string|max:255'
         ];
