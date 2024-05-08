@@ -22,7 +22,7 @@ class PostCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "image" => "required|mimes:png,jpeg",
+            "image" => "required|mimes:png,jpeg,mp4,avi,mov",
             "description" => "string|max:255"
         ];
     }

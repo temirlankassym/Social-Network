@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PostResource;
 use App\Http\Resources\SinglePostResource;
+use App\Interfaces\VideoConverter;
 use App\Services\AwsService;
-use Illuminate\Http\Request;
 use App\Http\Requests\PostCreateRequest;
 use App\Models\Post;
-use App\Models\Profile;
-use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     private AwsService $awsService;
+    private VideoConverter $videoConverter;
 
-    public function __construct(AwsService $awsService)
+    public function __construct(AwsService $awsService, VideoConverter $videoConverter)
     {
         $this->awsService = $awsService;
+        $this->videoConverter = $videoConverter;
     }
 
     /**
@@ -42,11 +41,21 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
+        $content = $request->file('image');
+
+        $extension = $this->videoConverter->resolveExtension($content);
+
+        if($extension!='png' && $extension!='jpeg' && $extension!='mp4'){
+            $content = $this->videoConverter->convertVideo($content);
+        }
+
         Post::create([
             'profile_id' => auth()->user()->profile->id,
-            'image' => $this->awsService->store($request->file('image')),
+            'image' => $this->awsService->store($content),
             'description' => $data['description'] ?? ""
         ]);
+
+        $this->videoConverter->delete($content);
 
         auth()->user()->profile->increment('posts',1);
 
