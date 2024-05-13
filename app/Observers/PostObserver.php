@@ -14,9 +14,7 @@ class PostObserver
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * Handle the Post "created" event.
-     */
+    // Handle the Post "created" event.
     public function created(Post $post): void
     {
         // retrieving all subscribers of the post's profile

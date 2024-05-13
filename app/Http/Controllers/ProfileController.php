@@ -14,6 +14,14 @@ use App\Models\Profile;
 
 class ProfileController extends Controller
 {
+    public function unsubscribe(Request $request){
+        $this->publisher->removeSubscriber($request['username'], auth()->user()->username);
+        return response("Success",200);
+    }
+
+    public function subscribers(Request $request){
+        return response()->json(Profile::where('username',$request['username'])->first()->subscribers);
+    }
     private $publisher;
     private AwsService $awsService;
     private RedisService $redisService;
@@ -164,12 +172,5 @@ class ProfileController extends Controller
      * )
      */
 
-    public function unsubscribe(Request $request){
-        $this->publisher->removeSubscriber($request['username'], auth()->user()->username);
-        return response("Success",200);
-    }
 
-    public function subscribers(Request $request){
-        return response()->json(Profile::where('username',$request['username'])->first()->subscribers);
-    }
 }
