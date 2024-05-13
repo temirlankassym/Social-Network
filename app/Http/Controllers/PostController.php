@@ -43,8 +43,10 @@ class PostController extends Controller
 
         $content = $request->file('image');
 
+        // Check if the file is a video
         $extension = $this->videoConverter->resolveExtension($content);
 
+        // Convert video to mp4 if it is not
         if($extension!='png' && $extension!='jpeg' && $extension!='mp4'){
             $content = $this->videoConverter->convertVideo($content);
         }

@@ -19,8 +19,10 @@ class PostObserver
      */
     public function created(Post $post): void
     {
+        // retrieving all subscribers of the post's profile
         $users = $post->profile->subscribers;
         foreach($users as $user){
+            // updating the state of the subscriber
             $this->subscriber->updateState($user->username, $user->subscriber);
         }
     }

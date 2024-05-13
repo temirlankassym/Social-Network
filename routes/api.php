@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountManagerController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -42,4 +44,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('/unsubscribe', [ProfileController::class, 'unsubscribe']);
 
     Route::get('/subscribers', [ProfileController::class, 'subscribers']);
+
+    // not implemented
+    Route::get('/feed', [FeedController::class, 'getFeed']);
+    Route::get('/account/private', [AccountManagerController::class, 'makePrivate']);
+    Route::get('/account/public', [AccountManagerController::class, 'makePublic']);
 });
